@@ -8,11 +8,12 @@ let config = parseJson(readFile("config.json"))
 
 let http = newAsyncHttpClient()
 
-proc startup() {.gcsafe, async.} =
-  echo "Kermit started! Webhook listening on ", config["address"].getStr(), ":", config["port"].getInt(), "!"
-
 proc setupInteractions() {.async.} =
   discard
+
+proc startup() {.gcsafe, async.} =
+  await setupInteractions()
+  echo "Kermit started! Webhook listening on ", config["address"].getStr(), ":", config["port"].getInt(), "!"
 
 let appSettings = newSettings(
   appName = "Kermit Bot",
