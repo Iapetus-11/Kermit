@@ -11,3 +11,4 @@ bin           = @["kermit"]
 # Dependencies
 
 requires "nim >= 1.4.8"
+requires "libsodium >= 0.3.0"
