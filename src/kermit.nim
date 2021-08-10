@@ -1,4 +1,5 @@
 import libsodium/sodium
+import asyncdispatch
 import httpclient
 import prologue
 import json
@@ -27,6 +28,8 @@ proc interaction(ctx: Context) {.async, gcsafe.} =
   let signature = ctx.request.getHeader("X-Signature-Ed25519")[0]
   let timestamp = ctx.request.getHeader("X-Signature-Timestamp")[0]
   verify_message(config["application_public_key"].getStr(), timestamp&ctx.request.body, signature)
+
+  resp "sus"
 
 # add route
 app.post("/interaction", interaction)
