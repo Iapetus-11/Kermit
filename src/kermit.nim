@@ -1,10 +1,13 @@
-import libsodium/sodium
 import asyncdispatch
 import httpclient
 import prologue
+import ed25519
 import json
 
+include utils
+
 let config = parseJson(readFile("config.json"))
+let publicKey = config["application_public_key"].getStr.hexStringToPublicKey
 
 let http = newAsyncHttpClient()
 
@@ -26,11 +29,17 @@ let app = newApp(appSettings, startup = @[initEvent(startup)])
 
 proc interaction(ctx: Context) {.async, gcsafe.} =
   # verify the request
-  let signature = ctx.request.getHeader("X-Signature-Ed25519")[0]
+  let signature = ctx.request.getHeader("X-Signature-Ed25519")[0].hexStringToSignature
   let timestamp = ctx.request.getHeader("X-Signature-Timestamp")[0]
-  verify_message(config["application_public_key"].getStr(), timestamp&ctx.request.body, signature)
 
-  resp "sus"
+  let verified = verify(timestamp&ctx.request.body, signature, publicKey)
+
+  if not verified:
+    resp "Unauthorized", Http401
+
+  # actually handle interactions
+
+  resp "sus", Http200
 
 # add route
 app.post("/interaction", interaction)
