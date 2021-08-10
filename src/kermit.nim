@@ -1,4 +1,4 @@
-import libsodium.sodium
+import libsodium/sodium
 import httpclient
 import prologue
 import json
