@@ -1,6 +1,6 @@
 {
     "address": "localhost",
-    "port": 8080,
+    "port": 4206,
     "debug": true,
     "application_public_key": "discord application public key"
 }
