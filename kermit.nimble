@@ -12,3 +12,4 @@ bin           = @["kermit"]
 
 requires "nim >= 1.4.8"
 requires "libsodium >= 0.3.0"
+requires "prologue >= 0.4.4"
