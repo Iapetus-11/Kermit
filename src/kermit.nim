@@ -4,9 +4,15 @@ import prologue
 import json
 
 let config = parseJson(readFile("config.json"))
-let appSettings = newSettings(appName="Kermit Bot", address=config["address"].getStr(), port=Port(config["port"].getInt()), debug=config["debug"].getBool())
+let appSettings = newSettings(
+  appName="Kermit Bot",
+  address=config["address"].getStr(),
+  port=Port(config["port"].getInt()),
+  debug=config["debug"].getBool()
+)
+
+let app = newApp(appSettings)
 let http = newAsyncHttpClient()
-let app = newApp()
 
 proc setupInteractions() {.async.} =
   discard
