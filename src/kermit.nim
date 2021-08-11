@@ -16,13 +16,13 @@ proc setupInteractions() {.async.} =
 
 proc startup() {.gcsafe, async.} =
   await setupInteractions()
-  echo "Kermit started! Webhook listening on ", config["address"].getStr(), ":", config["port"].getInt(), "!"
+  echo "Kermit started! Webhook listening on ", config["address"].getStr, ":", config["port"].getInt, "!"
 
 let appSettings = newSettings(
   appName = "Kermit Bot",
-  address = config["address"].getStr(),
-  port = Port(config["port"].getInt()),
-  debug = config["debug"].getBool()
+  address = config["address"].getStr,
+  port = Port(config["port"].getInt),
+  debug = config["debug"].getBool
 )
 
 let app = newApp(appSettings, startup = @[initEvent(startup)])
