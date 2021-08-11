@@ -37,7 +37,7 @@ proc interaction(ctx: Context) {.async, gcsafe.} =
   let data = ctx.request.body.parseJson
   
   case data["type"].getInt:
-  of 1: # ACK the PING
+  of 1: # ack the ping, see: https://discord.com/developers/docs/interactions/receiving-and-responding#receiving-an-interaction
     resp "{\"type\": 1}", Http200
   else:
     discard
